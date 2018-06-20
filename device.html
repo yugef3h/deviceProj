@@ -94,7 +94,7 @@
                href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
               <span class="glyphicon glyphicon-user ddy fs18" aria-hidden="true"></span>
               <!--<span class="ddy fs14">&nbsp;&nbsp;Manage</span>-->
-              <button data-target="#manage" data-toggle="tab" class="_none btn2a fs18">Manage</button>
+              <button data-target="#manage" data-toggle="tab" class="_none btn2a fs18 manage">Manage</button>
             </a>
           </div>
           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"></div>
@@ -135,7 +135,7 @@
     <!--main-->
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main tab-content">
       <!--manage-->
-      <div id="manage" class="tab-pane fade">
+      <div id="manage" class="tab-pane fade in active">
         <h2 class="sub-header">资源管理</h2>
         <div class="control-group">
           <a href="#" class="_none" style="float:left;" data-toggle="modal" data-target="#setUser">
@@ -160,7 +160,7 @@
               </ul>
             </div>
             <input type="text" class="srh" style="width:155px;" type="text" placeholder="&nbsp;姓名、证件号、编号"
-                   maxlength="32">
+                   maxlength="32" onkeydown="if (event.keyCode === 13) {InitSearch();}">
             <button class="btn btn-minor minor-sm" id="search-btn" type="button" style="border: transparent;">
               <span class="glyphicon glyphicon-search"></span>
               搜索
@@ -188,15 +188,6 @@
                 <a href="#" data-toggle="modal" data-target="#setUser" class="_none set" data-user="yuqinglong">操作</a>
               </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>yangyihua</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-              <td>
-                <a href="#" data-toggle="modal" data-target="#setUser" class="_none set" data-user="yangyihua">操作</a>
-              </td>
-            </tr>
             </tbody>
           </table>
         </div>
@@ -213,63 +204,76 @@
         </div>
       </div>
       <!--self-->
-      <div id="approval_new" class="self tab-pane fade in active">
+      <div id="approval_new" class="self tab-pane fade">
         <div class="alert alert-success alert-dismissible" role="alert" style="display: none;">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
           <strong>Well done!</strong> You successfully read this important alert message.
         </div>
         <h2 class="sub-header">签批件</h2>
-        <div class="bot">
-          区域管理：
-          <select id="area">
-            <option value="0" selected>请选择</option>
-            <option value="平通办公区">平通办公区: 东门.etc</option>
-            <option value="visitDoor">区1: 访客</option>
-          </select>
-          周计划：
-          <select id="plan">
-            <option value="0" selected>请选择</option>
-            <option value="默认启用周计划">默认启用周计划</option>
-            <option value="默认禁止周计划">默认禁止周计划</option>
-            <option value="定时保洁">定时保洁</option>
-          </select>
-        </div>
-        <div class="bot" style="margin-top:15px;">
-          <div class="row">
-            <div class="col-sm-1">卡时效:</div>
 
-            <div class='col-sm-3'>
-              <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                  <input type='text' class="form-control"/>
-                  <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-1">&nbsp;&nbsp;&nbsp;&nbsp;至</div>
+        区域管理：
+        <select id="area">
+          <option value="0" selected>请选择</option>
+          <option value="平通办公区">平通办公区: 14&36</option>
+          <option value="other">other</option>
+        </select>
+        周计划：
+        <select id="plan">
+          <option value="0" selected>默认启用周计划</option>
+          <option value="默认启用周计划">默认启用周计划</option>
+          <option value="默认禁止周计划">默认禁止周计划</option>
+          <option value="定时保洁">定时保洁</option>
+        </select>
 
-            <div class='col-sm-3'>
-              <div class="form-group">
-                <div class='input-group date' id='datetimepicker2'>
-                  <input type='text' class="form-control" value="2028-01-01"/>
-                  <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!--<div class="row">-->
+          <!--<div class="col-sm-2">卡时效:</div>-->
 
-        </div>
+          <!--<div class='col-sm-3'>-->
+            <!--<div class="form-group">-->
+              <!--<div class='input-group date' id='datetimepicker1'>-->
+                <!--<input type='text' class="form-control"/>-->
+                <!--<span class="input-group-addon">-->
+            <!--<span class="glyphicon glyphicon-calendar"></span>-->
+          <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-sm-1">&nbsp;&nbsp;&nbsp;&nbsp;至</div>-->
+
+          <!--<div class='col-sm-3'>-->
+            <!--<div class="form-group">-->
+              <!--<div class='input-group date' id='datetimepicker2'>-->
+                <!--<input type='text' class="form-control" value="2028-01-01"/>-->
+                <!--<span class="input-group-addon">-->
+            <!--<span class="glyphicon glyphicon-calendar"></span>-->
+          <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
         签批授权名单：
         <input type="text" class="username" placeholder="e.g.yuql,yangyh">
         <button class="btn btn-primary btn-sm post">postUser下发权限</button>
         <hr>
         <!--添加数据-->
-        <button class="btn btn-primary btn-sm upload">add&Upload存储</button>
+        <div class="row">
+          <div class="col-xs-2">
+            <label for="name" class="fs12">UserName</label>
+            <input type="text" id="name" class="form-control" placeholder="yuql">
+          </div>
+          <div class="col-xs-2">
+            <label for="cardNo">UserCardNo</label>
+            <input type="text" id="cardNo" class="form-control"  placeholder="cardNo">
+          </div>
+          <div class="col-xs-2">
+            <label for="Faces">Faces drop here!</label>
+            <input type="text" id="Faces" class="form-control">
+          </div>
+          <div style="padding-top: 26px;">
+            <button class="btn btn-primary btn-sm upload">add&Upload存储</button>
+          </div>
+        </div>
       </div>
       <!--old-->
       <div id="approval_old" class="tab-pane fade">
@@ -635,7 +639,6 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="ssr-test/db/img.js"></script>
 <script src="./js/users.js"></script>
 </body>
 </html>

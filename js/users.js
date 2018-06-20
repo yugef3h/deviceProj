@@ -1,7 +1,5 @@
 const ACTIVE = "active";
 const OPACTIVE = "opactive";
-const yql = db[1].userFaceImg;
-const yyh = db[0].userFaceImg;
 const pre = "data:image/jpeg;base64,";
 
 //jquery
@@ -39,11 +37,13 @@ $(function () {
     $(this).addClass(OPACTIVE);
   });
 
+
   /**
    * 提示工具
    * @param {[type]} options [description]
    */
   $('[data-toggle="tooltip"]').tooltip();
+
 
   /**
    * 时间组件
@@ -67,13 +67,14 @@ $(function () {
     $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
   });
 
+
   /**
    * 修改用户信息
    * @param {[type]} options [description]
    */
-  $('a.set').click(function (e) {
+  window.cUser = function  (e) {
+    e = e || window.event;
     let userName = e.target.getAttribute('data-user');
-    console.log(userName);
     autoSearch(userName, function (data) {
       let jpeg = 'data:image/jpeg;base64,';
       let src = jpeg + data[0].UserFaceImg;
@@ -81,13 +82,14 @@ $(function () {
       $('#cardCode').val(data[0].UserCardNo);
       $('#faceImg').attr('src',src);
     });
-  });
+  }
+
 
   /**
    * 用户信息修改后保存
    * @param {[type]} options [description]
    */
-  $('save').click(function () {
+  $('.save').click(function () {
     let UserName = $('#personName').val();
     let UserFaceImg = $('#faceImg').attr('src');
     let UserCardNo = $('#cardCode').val();
@@ -113,6 +115,7 @@ $(function () {
       }
     })
   });
+
 
   /**
    * 下发权限
@@ -144,38 +147,70 @@ $(function () {
 
   });
 
+
   /**
    * 添加数据到db
    * @param {[type]} options [description]
    */
+  window.addEventListener("dragenter", function(event) { event.preventDefault(); }, false);
+  window.addEventListener("dragover", function(event) { event.preventDefault(); }, false);
+  window.addEventListener("drop", function(event) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      let base64 = e.target.result;
+      base64 = base64.split(',')[1];
+      $('#Faces').val(base64);
+      //document.body.insertAdjacentHTML("afterBegin", '<p>' + e.target.result + '</p>');  // base64 encoded file data!
+      //console.log(e.target.result);
+    };
+    reader.readAsDataURL(event.dataTransfer.files[0]);
+    event.preventDefault();
+
+  }, false);
   $('.upload').click(function () {
-    $.ajax({
-      type:"POST",
-      url:"http://10.108.52.40:8080/DoorControlService/DoorUserManage",
-      dataType:"json",
-      data: {
-        //DoorUserManage
-        "UserName": "yangyh",
-        "UserFaceImg": yyh,
-        "UserCardNo": "202898",
-        "UserFinger": "data"
-      },
-      success: function (data) {
-        $('.alert').fadeIn().delay(500).fadeOut();
-        console.log('成功');
-        console.log(data);
-      },
-      error : function() {
-        console.log('error')
-      }
-    })
+    let $name = $('#name').val();
+    let $face = $('#Faces').val();
+    let $card = $('#cardNo').val();
+
+    if ($name !== '' && $face !== '' && $card !== '') {
+      $.ajax({
+        type:"POST",
+        url:"http://10.108.52.40:8080/DoorControlService/DoorUserManage",
+        dataType:"json",
+        data: {
+          "UserName": $name,
+          "UserFaceImg": $face,
+          "UserCardNo": $card,
+          "UserFinger": "data"
+        },
+        success: function (data) {
+          $('.alert').fadeIn().delay(500).fadeOut();
+          console.log('成功');
+          console.log(data);
+        },
+        error : function() {
+          console.log('error')
+        }
+      })
+    } else {
+      alert('请填写参数！')
+    }
 
   });
 
   initSearch();
+  $('.manage').click(function () {
+    console.log('正在加载，请稍候！');
+    $('input.srh').val('');
+    initSearch();
+  })
   $('#search-btn').click(function () {
     initSearch();
   })
+  window.InitSearch = function () {
+    initSearch();
+  };
+
 
   /**
    * upload
@@ -202,11 +237,13 @@ $(function () {
     }
   }
 
+
   /**
    * 初始化
    * @param {[type]} options [description]
    */
   function initSearch () {
+
     autoSearch(null, function (data) {
       let UserCardNo = '';
       let UserFaceImg = '';
@@ -215,14 +252,15 @@ $(function () {
       let jpeg = 'data:image/jpeg;base64,';
       $('#tableBody').empty();
       for (let i=1;i<=data.length;i++){
-        UserName = data[i].UserName;
-        UserCardNo = data[i].UserCardNo;
-        UserFaceImg = jpeg + data[i].UserFaceImg;
+        UserName = data[i-1].UserName;
+        UserCardNo = data[i-1].UserCardNo;
+        UserFaceImg = jpeg + data[i-1].UserFaceImg;
         UserDepartment = '所属部门';
         createTable(i, UserName, UserDepartment, UserCardNo);
       }
     });
   }
+
 
   /**
    * 查找
@@ -247,6 +285,7 @@ $(function () {
     })
   }
 
+
   /**
    * 建表
    * @param {[type]} i [description] 序列
@@ -260,9 +299,7 @@ $(function () {
       `<td>${a}</td>`+
       `<td>${b}</td>`+
       `<td>${c}</td>`+
-      `<td><a href="#" data-toggle="modal" data-target="#setUser" class="_none set" data-user="${a}">操作</a></td></tr>`
+      `<td><a href="#" data-toggle="modal" data-target="#setUser" class="_none" data-user="${a}" onclick='cUser(event);'>操作</a></td></tr>`
     );
   }
-
-
-})
+});

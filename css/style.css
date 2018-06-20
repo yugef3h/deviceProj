@@ -89,7 +89,7 @@ a span{font-size: 12px;}
 .modal-body{height:550px;}
 .minor-sm{padding:4px 8px 3px;font-size: 12px;height:26px;}
 .panel{border:inherit;box-shadow: inherit;-webkit-box-shadow: inherit;}
-.btn2a{position:absolute;width:100%;margin-left: -10%;background-color: transparent;border: transparent;outline: none;text-align: left;padding:0 0 0 14%}
+.btn2a{position:absolute;width:100%;height:43px;margin-left: -10%;background-color: transparent;border: transparent;outline: none;text-align: left;padding:0 0 10% 14%}
 .panel-heading.opactive{  background-color: #428bca;}
 .panel-heading.opactive span,.panel-heading.opactive button {color: #fff;}
 .panel-group .panel{border-radius: inherit;}
