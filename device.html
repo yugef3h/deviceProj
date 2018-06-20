@@ -489,7 +489,7 @@
                     拼音代码:
                   </label>
                   <div class="controls">
-                    <input type="text" id="personPinyin" name="pinyin" value="SD" disabled="disabled" maxlength="16"
+                    <input type="text" id="personPinyin" name="pinyin" value="YQL" disabled="disabled" maxlength="16"
                            data-toggle="tooltip" data-placement="right" title="允许数字、字母、','">
                   </div>
                 </div>
@@ -636,45 +636,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="ssr-test/db/img.js"></script>
-<script>
-
-  (function () {
-    'use strict';
-    // IE10 viewport hack for Surface/desktop Windows 8 bug
-    if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-      var msViewportStyle = document.createElement('style')
-      msViewportStyle.appendChild(
-        document.createTextNode(
-          '@-ms-viewport{width:auto!important}'
-        )
-      )
-      document.querySelector('head').appendChild(msViewportStyle)
-    }
-
-
-    //upload
-    var file = document.querySelector('#zip');
-    var upload = document.querySelector('.import');
-    var xhr = new XMLHttpRequest();
-
-    upload.addEventListener('click', uploadFile, false);
-    // 点击上传
-    function uploadFile(event) {
-      var formData = new FormData();
-      formData.append('test', file.files[0]);
-      xhr.onload = uploadSuccess;
-      xhr.open('post', 'http://localhost:3009/api/ajaxfileupload', true);
-      xhr.send(formData);
-    }
-    // 成功上传
-    function uploadSuccess(event) {
-      if (xhr.readyState === 4) {
-        console.log(xhr.responseText);
-        $('#myZip').modal('hide');
-      }
-    }
-  })();
-</script>
 <script src="./js/users.js"></script>
 </body>
 </html>
