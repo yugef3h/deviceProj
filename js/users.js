@@ -110,10 +110,61 @@ $(function () {
         console.log(data);
         $('#setUser').modal('hide')
       },
-      error : function() {
-        console.log('error')
+      error : function(err) {
+        console.log(err.responseText)
       }
     })
+  });
+
+
+  /**
+   * clear
+   * @param {[type]} options [description]
+   */
+  $('.clear').click(function () {
+    $('#Faces').val('');
+    $('#SubArea').val('');
+    $('#IP').val('');
+    $('#cardNo').val('');
+    $('#name').val('');
+    $('#AreaName').val('');
+    $('#DoorName').val('');
+  });
+
+
+  /**
+   *  区域配置
+   * @param {[type]} options [description]
+   */
+  $('.areaSet').click(function () {
+    let $AreaName = $('#AreaName').val();
+    let $SubArea = $('#SubArea').val();
+    let $IP = $('#IP').val();
+    let $DoorName = $('#DoorName').val();
+    if ($AreaName !== '' && $SubArea !== '' && $IP !== '' && $DoorName !== '') {
+      $.ajax({
+        url: 'http://10.108.52.40:8080/DoorControlService/DoorService',
+        type: 'GET',
+        data:{
+          "AreaName": $AreaName,
+          "SubArea": $SubArea,
+          "IP": $IP,
+          "User": "admin",
+          "Passwd": "a1234567",
+          "DoorName":$DoorName,
+        },
+        success: function (data) {
+          console.log('成功');
+          console.log(data);
+          $('.alert').fadeIn().delay(500).fadeOut();
+        },
+        error: function (err) {
+          console.log(err.responseText)
+        }
+      });
+    } else {
+      alert('请填写区域名称！')
+    }
   });
 
 
@@ -137,8 +188,8 @@ $(function () {
           console.log(data);
           $('.alert').fadeIn().delay(500).fadeOut();
         },
-        error : function() {
-          console.log('error')
+        error : function(err) {
+          console.log(err.responseText)
         }
       })
     } else {
@@ -185,11 +236,11 @@ $(function () {
         },
         success: function (data) {
           $('.alert').fadeIn().delay(500).fadeOut();
-          console.log('成功');
+          console.log('成功')
           console.log(data);
         },
-        error : function() {
-          console.log('error')
+        error : function(err) {
+          console.log(err.responseText);
         }
       })
     } else {
@@ -279,8 +330,8 @@ $(function () {
         console.log(data);
         callback(data);
       },
-      error: function () {
-        console.log('error');
+      error: function (err) {
+        console.log(err.responseText);
       }
     })
   }

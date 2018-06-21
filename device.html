@@ -81,7 +81,7 @@
 
             <ul class="list-group fs18">
               <li class="_item"><a href="#approval_new" data-toggle="tab" class="_none">待处理</a></li>
-              <li class="_item"><a href="#approval_old" data-toggle="tab" class="_none">草稿</a></li>
+              <!--<li class="_item"><a href="#approval_old" data-toggle="tab" class="_none">草稿</a></li>-->
               <li class="_item"><a href="#approval_done" data-toggle="tab" class="_none">归档</a></li>
             </ul>
 
@@ -268,10 +268,11 @@
           </div>
           <div class="col-xs-2">
             <label for="Faces">Faces drop here!</label>
-            <input type="text" id="Faces" class="form-control">
+            <input type="text" id="Faces" class="form-control" disabled="disabled">
           </div>
           <div style="padding-top: 26px;">
             <button class="btn btn-primary btn-sm upload">add&Upload存储</button>
+            <button class="btn btn-default btn-sm clear">清空</button>
           </div>
         </div>
       </div>
@@ -403,8 +404,30 @@
       </div>
       <!--settings-->
       <div id="settings" class="tab-pane fade">
-        <h2 class="sub-header">参数设置</h2>
+        <h2 class="sub-header">区域配置</h2>
         <p>前端跨域 port:9085</p>
+        <div class="row">
+          <div class="col-xs-2">
+            <label for="AreaName" >AreaName</label>
+            <input type="text" id="AreaName" class="form-control" placeholder="平通办公区">
+          </div>
+          <div class="col-xs-2">
+            <label for="SubArea">SubArea</label>
+            <input type="text" id="SubArea" class="form-control"  placeholder="IT办公区">
+          </div>
+          <div class="col-xs-2">
+            <label for="IP">IP</label>
+            <input type="text" id="IP" class="form-control"  placeholder="10.108.52.14">
+          </div>
+          <div class="col-xs-2">
+            <label for="DoorName">DoorName</label>
+            <input type="text" id="DoorName" class="form-control"  placeholder="东门1">
+          </div>
+          <div style="padding-top: 26px;">
+            <button class="btn btn-primary btn-sm areaSet">设置</button>
+            <button class="btn btn-default btn-sm clear">清空</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
